@@ -41,9 +41,9 @@ int main(int argc, char** argv) {
             std::to_string(std::hash<std::string>{}(s.first.target)) +
             extension(s.second);
         std::filesystem::path filePath{fileName};
-        auto img = safeTry<Image>(load, filePath, s.second);
+        auto img = safeTry(load, filePath, s.second);
         if (isFailure(img)) {
-          img = safeTry<Image>([uri = s.first, type = s.second, filePath]() {
+          img = safeTry([uri = s.first, type = s.second, filePath]() {
             download(uri, filePath);
             return load(filePath, type);
           });

@@ -4,12 +4,14 @@
 
 using E = std::exception;
 
-template <typename R, typename F, typename... A>
-std::variant<R, E> safeTry(F&& f, A&&... a) {
+template <typename F, typename... A>
+auto safeTry(F&& f, A&&... a) {
+  using R = decltype(f(std::forward<A>(a)...));
+  using V = std::variant<R, E>;
   try {
-    return f(std::forward<A>(a)...);
+    return V(f(std::forward<A>(a)...));
   } catch (std::exception& e) {
-    return e;
+    return V(e);
   }
 }
 template <typename R>
