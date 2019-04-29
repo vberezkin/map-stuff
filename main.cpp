@@ -1,4 +1,5 @@
 #include <array>
+#include <boost/format.hpp>
 #include <iostream>
 
 #include "downloader.h"
@@ -11,32 +12,23 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
   std::string accessToken{argv[1]};
-
-  Uri navDay{Scheme::https, "api.mapbox.com",
-             "/styles/v1/rimidalv/cjmxmvqmu12nb2snrq4gdlufg/static/"
-             "37.5663,55.7355,7.55,0,0/"
-             "512x512?access_token=" +
-                 accessToken};
-  Uri navNight{Scheme::https, "api.mapbox.com",
-               "/styles/v1/rimidalv/cjmxmwso58gkb2snx7frm23tr/static/"
-               "37.5663,55.7355,7.55,0,0/"
-               "512x512?access_token=" +
-                   accessToken};
-  Uri relief{Scheme::https, "api.mapbox.com",
-             "/styles/v1/rimidalv/cjftr9lie1pu22sqc05sdhp99/static/"
-             "37.5663,55.7355,7.55,0,0/"
-             "512x512?access_token=" +
-                 accessToken};
+  auto mapboxFmt =
+      "/styles/v1/%1%/static/37.616667,55.75,8,0,0/"
+      "1024x1024?access_token=" +
+      accessToken;
+  Uri navDay{
+      Scheme::https, "api.mapbox.com",
+      str(boost::format{mapboxFmt} % "rimidalv/cjmxmvqmu12nb2snrq4gdlufg")};
+  Uri navNight{
+      Scheme::https, "api.mapbox.com",
+      str(boost::format{mapboxFmt} % "rimidalv/cjmxmwso58gkb2snx7frm23tr")};
+  Uri relief{
+      Scheme::https, "api.mapbox.com",
+      str(boost::format{mapboxFmt} % "rimidalv/cjftr9lie1pu22sqc05sdhp99")};
   Uri streets{Scheme::https, "api.mapbox.com",
-              "/styles/v1/mapbox/streets-v11/static/"
-              "37.5663,55.7355,7.55,0,0/"
-              "512x512?access_token=" +
-                  accessToken};
+              str(boost::format{mapboxFmt} % "mapbox/streets-v11")};
   Uri satellite{Scheme::https, "api.mapbox.com",
-                "/styles/v1/mapbox/satellite-v9/static/"
-                "37.5663,55.7355,7.55,0,0/"
-                "512x512?access_token=" +
-                    accessToken};
+                str(boost::format{mapboxFmt} % "mapbox/satellite-v9")};
   std::array us = {std::make_pair(navDay, Type::png),
                    std::make_pair(navNight, Type::png),
                    std::make_pair(streets, Type::png),

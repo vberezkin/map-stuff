@@ -18,18 +18,22 @@ std::string extension(Type type);
 
 double accelDecelInterpolator(double x);
 double sineInterpolator(double x);
+double sineInterpolatorXY(double x, double y);
 
 Pixel mixPixels(const Pixel& a, const Pixel& b, double weight);
 
 template <size_t N>
 Pixel mapPixel(double x, double y, const std::array<Pixel, N>& s) {
-   auto j = sineInterpolator(x);
-   Pixel e = mixPixels(s[3], s[2], j);
-  // return e;
-  auto k = sineInterpolator(y);
-  Pixel d = mixPixels(s[1], s[0], k);
-  //return d;
-   return mixPixels(e, d, .5);
+  auto r = std::sqrt((x - .5) * (x - .5) + (y - .5) * (y - .5)*2);
+  return mixPixels(s[0], s[1], sineInterpolator(r));
+
+  // auto j = sineInterpolatorXY(x, y);
+  // auto k = sineInterpolatorXY(x, -y);
+  // Pixel e = mixPixels(s[1], s[0], j);
+  // Pixel d = mixPixels(s[1], s[0], k);
+  ////Pixel e = mixPixels(s[3], s[2], j);
+  ////Pixel d = mixPixels(s[3], s[2], k);
+  // return mixPixels(e, d, .5);
 }
 
 template <size_t N>
