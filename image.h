@@ -25,8 +25,9 @@ Pixel mixPixels(const Pixel& a, const Pixel& b, double weight);
 template <size_t N>
 Pixel mapPixel(double x, double y, const std::array<Pixel, N>& s) {
   auto r = std::sqrt((x - .5) * (x - .5) + (y - .5) * (y - .5)*2);
-  return mixPixels(s[0], s[1], sineInterpolator(r));
+  auto sine = mixPixels(s[0], s[1], sineInterpolator(r));
 
+  return mixPixels(s[2], sine, r / 2.);
   // auto j = sineInterpolatorXY(x, y);
   // auto k = sineInterpolatorXY(x, -y);
   // Pixel e = mixPixels(s[1], s[0], j);

@@ -30,7 +30,7 @@ double accelDecelInterpolator(double x) {
 }
 
 double sineInterpolator(double x) {
-  return std::sin(x * 60.) / 2. + .5;
+  return std::sin(x * 50.) / 2. + .5;
 }
 
 double sineInterpolatorXY(double x, double y) {

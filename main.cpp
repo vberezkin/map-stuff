@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
   std::string accessToken{argv[1]};
   auto mapboxFmt =
       "/styles/v1/%1%/static/37.616667,55.75,8,0,0/"
-      "1024x1024?access_token=" +
+      "960x540?access_token=" +
       accessToken;
   Uri navDay{
       Scheme::https, "api.mapbox.com",
@@ -31,7 +31,6 @@ int main(int argc, char** argv) {
                 str(boost::format{mapboxFmt} % "mapbox/satellite-v9")};
   std::array us = {std::make_pair(navDay, Type::png),
                    std::make_pair(navNight, Type::png),
-                   std::make_pair(streets, Type::png),
                    std::make_pair(satellite, Type::jpeg)};
 
   std::array<Image, us.size()> imgs;
