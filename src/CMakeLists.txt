@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
 
-#set(CMAKE_CONFIGURATION_TYPES Debug Release)
-
 project(mwp)
 
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
